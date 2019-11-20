@@ -5,9 +5,16 @@
 {% block content %}
 
 <header>
-	<nav><ul>
-		<li><a href="">Contact</a></li>
-		<li><a href="">Access</a></li>
+	<nav>
+		<ul>
+			<li><a href="">Contact</a></li>
+			<li><a href="{{ url_for('login') }}">Access</a></li>
+		</ul>
+	</nav>
+	<section>
+		<a href="" class="btn btn-primary">Make an appointment</a>
+		<a href="" class="btn btn-primary">Check device status</a>
+	</section>
 </header>
 
 {% endblock %}
