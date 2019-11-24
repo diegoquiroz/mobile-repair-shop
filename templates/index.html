@@ -4,17 +4,23 @@
 
 {% block content %}
 
-<header>
-	<nav>
-		<ul>
-			<li><a href="">Contact</a></li>
-			<li><a href="{{ url_for('login') }}">Access</a></li>
+<header class="hero h-75">
+	<nav class="pr-5">
+		<a class="navbar-brand" href="#">
+			<img src="/docs/4.3/assets/brand/bootstrap-solid.svg" width="30" height="30" alt="">
+		</a>
+		<ul class="nav justify-content-end nav-pills">
+			<li class="nav-item"><a href="" class="nav-link">Contact</a></li>
+			<li class="nav-item"><a href="{{ url_for('login') }}" class="nav-link active">Access</a></li>
 		</ul>
 	</nav>
-	<section>
-		<a href="" class="btn btn-primary">Make an appointment</a>
-		<a href="" class="btn btn-primary">Check device status</a>
+	<section class="h-75">
+		<div class="h-75 d-flex flex-row justify-content-center align-items-center">
+			<a href="{{ url_for('schedule') }}" class="btn btn-primary hero-btn">Make an appointment</a>
+			<a href="{{ url_for('status') }}" class="btn btn-primary hero-btn">Check device status</a>
+		</div>
 	</section>
 </header>
+
 
 {% endblock %}

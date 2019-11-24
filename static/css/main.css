@@ -1,0 +1,27 @@
+html, body {
+	height: 100%;
+	width: 100%;
+}
+
+.hero {
+	background-image: url('../images/hero.jpg');
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 480px;
+}
+
+.hero-btn {
+	margin: 20px;
+}
+
+.form-container {
+	border: 1px solid #e6e6e6;
+	border-radius: 1px;
+	/*max-width: 45%;*/
+	padding: 25px;
+}
+
+.form-container img {
+	max-width: 25%;
+}
