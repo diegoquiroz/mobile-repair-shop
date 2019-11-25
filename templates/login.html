@@ -1,0 +1,22 @@
+{% extends 'form.html' %}
+
+{% block title %} {{ super() }} Log In {% endblock %}
+
+{% block form %}
+	<img src="{{ url_for('static', filename='images/shop_logo.png') }}" alt="" class="img-fluid rounded mx-auto d-block pb-4">
+	<form action="{{ url_for('login') }}" method="POST">
+		{{ login_form.csrf_token }}
+		<div class="form-group">
+			{{ login_form.username.label(class="control-label") }}
+			{{ login_form.username(class="form-control") }}
+		</div>
+
+		<div class="form-group">
+			{{ login_form.password.label(class="control-label") }}
+			{{ login_form.password(class="form-control") }}
+		</div>
+
+		{{ login_form.submit(class="btn btn-primary btn-block mt-5") }}
+	</form>
+	
+{% endblock %}
