@@ -10,9 +10,9 @@
 		{% endif %}
 		<div class="row h-100 justify-content-center align-items-center">
 			{% if request.path == "/login" %}
-				<div class="form-container col-sm-12 col-md-5 col-lg-5">
+				<div class="form-container col-sm-12 col-md-5 col-lg-5 justify-content-center d-flex flex-column justify-content-center">
 			{% else %}
-				<div class="form-container col-sm-12 col-md-8 col-lg-8">
+				<div class="form-container col-sm-12 col-md-8 col-lg-8 d-flex flex-column justify-content-center">
 
 			{% endif %}
 					{% block form %}
