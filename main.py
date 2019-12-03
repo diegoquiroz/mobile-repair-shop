@@ -1,6 +1,7 @@
-from flask import Flask, render_template, session, redirect, url_for
+from flask import Flask, render_template, session, redirect, url_for, flash
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, SelectMultipleField
+from wtforms.fields.html5 import DateTimeLocalField
 from wtforms.validators import DataRequired
 
 app = Flask(__name__)
@@ -15,7 +16,7 @@ class LoginForm(FlaskForm):
 
 
 class PhoneForm(FlaskForm):
-	brand = SelectMultipleField('Brand', choices=[
+	brand = SelectMultipleField('Brand', validators=[DataRequired()], choices=[
 		('1', 'Apple'),
 		('2', 'Huawei'),
 		('3', 'Samsung'),
@@ -23,7 +24,7 @@ class PhoneForm(FlaskForm):
 		('5', 'Xiaomi'),
 		('6', 'Nokia')
 	])
-	model = SelectMultipleField('Model', choices=[
+	model = SelectMultipleField('Model', validators=[DataRequired()], choices=[
 		('1', 'iPhone 11 Pro'),
 		('2', 'iPhone 11 Pro Max'),
 		('3', 'iPhone 11'),
@@ -34,6 +35,21 @@ class PhoneForm(FlaskForm):
 		('8', 'iPhone 8 Plus'),
 		('9', 'iPhone 8')
 	])
+	problem = SelectMultipleField('Problem', validators=[DataRequired()], choices=[
+		('1', 'Screen'),
+		('2', 'It is soaking wet'),
+		('3', 'Does not turn on'),
+		('4', 'Other(Specify bellow)')
+	])
+	problem_explanation = StringField('Explain with your own words')
+	date = DateTimeLocalField('Select a Day', format='%d/%m/%y', validators=[DataRequired()])
+	email = StringField('Email', validators=[DataRequired()])
+	schedule = SubmitField('Schedule')
+
+
+@app.errorhandler(404)
+def not_found(error):
+	return render_template('404.html')
 
 
 @app.route('/')
@@ -41,13 +57,22 @@ def index():
 	return render_template('index.html')
 
 
-@app.route('/appointment')
+@app.route('/appointment', methods=['GET', 'POST'])
 def schedule():
 	form = PhoneForm()
+	email = session.get('email')
 
 	context = {
 		'form': form,
+		'email': email
 	}
+
+	if form.validate_on_submit():
+		email = form.email.data
+		session['email'] = email
+		print('perros')
+
+		return redirect('/success')
 
 	return render_template('schedule.html', **context)
 
@@ -88,8 +113,19 @@ def login():
 		username = login_form.username.data
 		# response = make_response(redirect(url_for('dashboard')))
 		session['username'] = username
-		print('perros')
+
+		flash('Inicio de sesión con éxito para el usuario {}'.format(username))
 
 		return redirect(url_for('dashboard'))
 
 	return render_template('login.html', **context)
+
+
+@app.route('/success')
+def success():
+	email = session.get('email')
+
+	context = {
+		'email': email
+	}
+	return render_template('success.html', **context)

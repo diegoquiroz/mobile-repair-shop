@@ -1,8 +1,10 @@
 {% extends 'form.html' %}
 
 {% block form %}
-	<h2>Which phone do you have?</h2>
-	<form action="{{ url_for('schedule') }}">
+	
+	<form action="{{ url_for('schedule') }}" method="POST">
+		{{ form.csrf_token }}
+		<h2>Which phone do you have?</h2>
 		<div class="form-group">
 			<h5>{{ form.brand.label }}</h5>
 			{{ form.brand(class="form-control") }}
@@ -11,5 +13,24 @@
 			<h5>{{ form.model.label }}</h5>
 			{{ form.model(class="form-control") }}
 		</div>
+		<h2>What is the problem with your device?</h2>
+		<div class="form-group">
+			<h5>{{ form.problem.label }}</h5>
+			{{ form.problem(class="form-control") }}
+		</div>
+		<div class="form-group">
+			<h5>{{ form.problem_explanation.label }}</h5>
+			{{ form.problem_explanation(class="form-control") }}
+		</div>
+		<h2>Choose date and time</h2>
+		<div class="form-group">
+			<h5>{{ form.date.label }}</h5>
+			{{ form.date(class="form-control") }}
+		</div>
+		<div class="form-group">
+			<h5>{{form.email.label}}</h5>
+			{{ form.email(class="form-control") }}
+		</div>
+		{{ form.schedule(class="btn btn-primary mt-5")}}
 	</form>
 {% endblock %}
