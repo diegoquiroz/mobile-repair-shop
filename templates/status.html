@@ -1,1 +1,19 @@
-status.html
+{% extends 'form.html' %}
+
+{% block form %}
+
+	<form action="{{ url_for('status')}}" method="POST" class="w-75">
+		{{ form.csrf_token }}
+		<h2>Check status</h2>
+		<div class="form-group">
+			<h5>{{ form.order_id.label }}</h5>
+			{{ form.order_id(class="form-control") }}
+		</div>
+		<div class="form-group">
+			<h5>{{ form.email.label }}</h5>
+			{{ form.email(class="form-control")}}
+		</div>
+		{{ form.check(class="btn btn-primary mt-5 ml-auto") }}
+	</form>
+
+{% endblock %}

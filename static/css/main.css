@@ -1,6 +1,7 @@
 html, body {
 	height: 100%;
 	width: 100%;
+	background-color: #fafafa!important;
 }
 
 .hero {
@@ -16,8 +17,10 @@ html, body {
 }
 
 .form-container {
+	background-color: white;
 	border: 1px solid #e6e6e6;
 	border-radius: 2px;
+	box-shadow: 0 0 10px 0 rgba(0,0,0,.1);
 	/*max-width: 45%;*/
 	padding: 25px;
 }

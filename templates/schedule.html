@@ -2,7 +2,7 @@
 
 {% block form %}
 	
-	<form action="{{ url_for('schedule') }}" method="POST">
+	<form action="{{ url_for('schedule') }}" method="POST" class="w-75">
 		{{ form.csrf_token }}
 		<h2>Which phone do you have?</h2>
 		<div class="form-group">
@@ -13,7 +13,7 @@
 			<h5>{{ form.model.label }}</h5>
 			{{ form.model(class="form-control") }}
 		</div>
-		<h2>What is the problem with your device?</h2>
+		<h2 class="mt-5">What is the problem with your device?</h2>
 		<div class="form-group">
 			<h5>{{ form.problem.label }}</h5>
 			{{ form.problem(class="form-control") }}
@@ -22,10 +22,14 @@
 			<h5>{{ form.problem_explanation.label }}</h5>
 			{{ form.problem_explanation(class="form-control") }}
 		</div>
-		<h2>Choose date and time</h2>
+		<h2 class="mt-5">Choose date and time</h2>
 		<div class="form-group">
 			<h5>{{ form.date.label }}</h5>
 			{{ form.date(class="form-control") }}
+		</div>
+		<div class="form-group">
+			<h5>{{ form.time.label }}</h5>
+			{{ form.time(class="form-control") }}
 		</div>
 		<div class="form-group">
 			<h5>{{form.email.label}}</h5>
