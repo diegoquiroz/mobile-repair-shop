@@ -1,13 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
 	<div class="container h-100">
 		{% if request.path == "/login" %}
 			<a href="{{ url_for('index') }}" class="nav-link active">< Exit</a>
 		{% else %}
 			<a href="{{ url_for('index') }}" class="nav-link active">< Back</a>
 		{% endif %}
+		{% for message in get_flashed_messages() %}
+			<div class="alert alert-success alert-dismissible">
+				<button type="button" data-dismiss="alert" class="close">&times;</button>
+				{{ message }}
+			</div>
+		{% endfor %}
 		<div class="row h-100 justify-content-center align-items-center">
 			{% if request.path == "/login" %}
 				<div class="form-container col-sm-12 col-md-5 col-lg-5 d-flex flex-column justify-content-center">

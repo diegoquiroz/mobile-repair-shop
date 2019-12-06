@@ -12,29 +12,29 @@ class LoginForm(FlaskForm):
 
 class PhoneForm(FlaskForm):
 	brand = SelectMultipleField('Brand', validators=[DataRequired()], choices=[
-		('1', 'Apple'),
-		('2', 'Huawei'),
-		('3', 'Samsung'),
-		('4', 'LG'),
-		('5', 'Xiaomi'),
-		('6', 'Nokia')
+		('Apple', 'Apple'),
+		('Huawei', 'Huawei'),
+		('Samsung', 'Samsung'),
+		('LG', 'LG'),
+		('Xiaomi', 'Xiaomi'),
+		('Nokia', 'Nokia')
 	])
 	model = SelectMultipleField('Model', validators=[DataRequired()], choices=[
-		('1', 'iPhone 11 Pro'),
-		('2', 'iPhone 11 Pro Max'),
-		('3', 'iPhone 11'),
-		('4', 'iPhone XS'),
-		('5', 'iPhone XS Max'),
-		('6', 'iPhone XR'),
-		('7', 'iPhone X'),
-		('8', 'iPhone 8 Plus'),
-		('9', 'iPhone 8')
+		('iPhone 11 Pro', 'iPhone 11 Pro'),
+		('iPhone 11 Pro Max', 'iPhone 11 Pro Max'),
+		('iPhone 11', 'iPhone 11'),
+		('iPhone XS', 'iPhone XS'),
+		('iPhone XS', 'iPhone XS'),
+		('iPhone XR', 'iPhone XR'),
+		('iPhone X', 'iPhone X'),
+		('iPhone 8 Plus', 'iPhone 8 Plus'),
+		('iPhone 8', 'iPhone 8')
 	])
 	problem = SelectMultipleField('Problem', validators=[DataRequired()], choices=[
-		('1', 'Screen'),
-		('2', 'It is soaking wet'),
-		('3', 'Does not turn on'),
-		('4', 'Other(Specify bellow)')
+		('Screen', 'Screen'),
+		('It is soaking wet', 'It is soaking wet'),
+		('Does not turn on', 'Does not turn on'),
+		('Other(Specify bellow)', 'Other(Specify bellow)')
 	])
 	problem_explanation = StringField('Explain with your own words')
 	date = DateField('Select a Day', format='%Y-%m-%d', validators=[DataRequired()])

@@ -1,9 +1,23 @@
 from flask import Flask, render_template, session, redirect, url_for, flash
+from flask_login import LoginManager, login_required, login_user, current_user, logout_user
+from firestore_service import get_user, set_appointment
 from forms import LoginForm, PhoneForm, StatusForm
+from models import UserModel, UserData
+
 
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'KEY'
+
+login_manager = LoginManager()
+login_manager.login_view = 'login'
+
+login_manager.init_app(app)
+
+
+@login_manager.user_loader
+def load_user(username):
+	return UserModel.query(username)
 
 
 @app.errorhandler(404)
@@ -25,20 +39,24 @@ def schedule():
 	}
 
 	if form.validate_on_submit():
+		brand = form.brand.data
+		model = form.model.data
+		problem = form.problem.data
+		problem_explanation = form.problem_explanation.data
+		email = form.email.data
+		set_appointment(brand, model, problem, problem_explanation, email)
+
 		return redirect('/success')
 
 	return render_template('schedule.html', **context)
 
 
 @app.route('/dashboard')
+@login_required
 def dashboard():
-	username = session.get('username')
-
-	if not username:
-		return '<h1>No encontramos la página que buscas</h1>'
-
+	username = current_user.id
 	context = {
-		'username': username
+		'username': username,
 	}
 
 	return render_template('dashboard.html', **context)
@@ -65,19 +83,40 @@ def login():
 		'username': username
 	}
 
-	if username:
+	if current_user:
 		return redirect(url_for('dashboard'))
 
 	if login_form.validate_on_submit():
 		username = login_form.username.data
-		# response = make_response(redirect(url_for('dashboard')))
-		session['username'] = username
+		password = login_form.password.data
 
-		flash('Inicio de sesión con éxito para el usuario {}'.format(username))
+		user_doc = get_user(username)
 
-		return redirect(url_for('dashboard'))
+		if user_doc.to_dict() is not None:
+			password_from_db = user_doc.to_dict()['password']
+
+			if password == password_from_db:
+				user_data = UserData(username, password)
+				user = UserModel(user_data)
+
+				login_user(user)
+				flash('Login success')
+
+				return redirect(url_for('dashboard'))
+			else:
+				flash('Information does not match')
+		else:
+			flash('User does not exist')
 
 	return render_template('login.html', **context)
+
+
+@app.route('/logout')
+@login_required
+def logout():
+	logout_user()
+
+	return redirect(url_for('login'))
 
 
 @app.route('/success')

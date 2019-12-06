@@ -1,2 +1,4 @@
 flask
 flask-wtf
+firebase-admin
+flask-login
