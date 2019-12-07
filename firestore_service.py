@@ -27,3 +27,7 @@ def set_appointment(brand, model, problem, problem_explanation, email):
 			'email': email
 		}
 	)
+
+
+def get_appointment(apponitment_id):
+	return db.collection('appointments').document(apponitment_id).get()

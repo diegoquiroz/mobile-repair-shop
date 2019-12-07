@@ -1,6 +1,6 @@
 from flask import Flask, render_template, session, redirect, url_for, flash
 from flask_login import LoginManager, login_required, login_user, current_user, logout_user
-from firestore_service import get_user, set_appointment
+from firestore_service import get_user, set_appointment, get_appointment
 from forms import LoginForm, PhoneForm, StatusForm
 from models import UserModel, UserData
 
@@ -62,7 +62,7 @@ def dashboard():
 	return render_template('dashboard.html', **context)
 
 
-@app.route('/device-status')
+@app.route('/device-status', methods=['GET', 'POST'])
 def status():
 	form = StatusForm()
 
@@ -70,6 +70,20 @@ def status():
 		'form': form,
 	}
 
+	if form.validate_on_submit():
+		oid = form.order_id.data
+
+		appointment = get_appointment(oid)
+		apdict = appointment.to_dict()
+		context = {
+			'appointment': apdict,
+		}
+
+		if appointment.to_dict() is not None:
+
+			return render_template('checking.html', **context)
+		else:
+			flash('No existe la orden {}'.format(oid))
 	return render_template('status.html', **context)
 
 
@@ -83,7 +97,7 @@ def login():
 		'username': username
 	}
 
-	if current_user:
+	if current_user is True:
 		return redirect(url_for('dashboard'))
 
 	if login_form.validate_on_submit():
